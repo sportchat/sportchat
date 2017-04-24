@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+    tools:context="com.example.administrator.sportapp.SelectMenuActivity">
+
+    <FrameLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="343dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonRunning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ריצה" />
+
+            <Button
+                android:id="@+id/buttonSoccerBall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="כדורגל" />
+
+            <Button
+                android:id="@+id/buttonYoga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="יוגה" />
+
+            <Button
+                android:id="@+id/buttonKaraoke"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="קריוקי" />
+        </LinearLayout>
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>
+
