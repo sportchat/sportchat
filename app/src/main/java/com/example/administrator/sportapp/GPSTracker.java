@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 
+@SuppressWarnings("MissingPermission")
 public class GPSTracker extends Service implements LocationListener{
 
     private final Context context;
