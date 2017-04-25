@@ -10,11 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.*;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +31,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     //defining a database reference
     private DatabaseReference databaseReference;
-
     //our new views
     private EditText editTextName, editTextPhone;
     private Button buttonSave;
@@ -62,6 +61,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         //getting the database reference
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+
+
         //getting the views from xml resource
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTextName = (EditText) findViewById(R.id.editTextName);
@@ -91,8 +92,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         gps = new GPSTracker(ProfileActivity.this);
 
         if(gps.canGetLocation()) {
-             latitude = gps.getLatitude();
-             longitude = gps.getLongitude();
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
 
 
 //
