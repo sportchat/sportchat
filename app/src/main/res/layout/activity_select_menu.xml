@@ -17,35 +17,47 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="343dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
             <Button
                 android:id="@+id/buttonRunning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ריצה" />
+                android:text="ריצה"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/buttonSoccerBall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="כדורגל" />
+                android:text="כדורגל"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/buttonYoga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="יוגה" />
+                android:text="יוגה"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/buttonKaraoke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="קריוקי" />
+                android:text="קריוקי"
+                tools:ignore="HardcodedText" />
+            <Button
+                android:id="@+id/buttonback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="חזרה"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>
