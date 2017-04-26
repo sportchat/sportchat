@@ -2,6 +2,7 @@ package com.example.administrator.sportapp;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -10,7 +11,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -35,19 +42,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         gps = new GPSTracker(MapsActivity.this);
 
-        if(gps.canGetLocation()) {
+        if (gps.canGetLocation()) {
             latitude = gps.getLatitude();
             longitude = gps.getLongitude();
 
+
+        }
 
 //
 //            Toast.makeText(
 //                    getApplicationContext(),
 //                    "Your Location is -\nLat: " + latitude + "\nLong: "
 //                            + longitude, Toast.LENGTH_LONG).show();
-        } else {
-            gps.showSettingsAlert();
-        }
+
+        else
+
+    {
+        gps.showSettingsAlert();
+    }
+
+
+}
 
 
 //        //initializing firebase authentication object
@@ -78,7 +93,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                    }
 //                });
 
-}
 
 
 
@@ -103,5 +117,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.addMarker(new MarkerOptions().position(MyLocation).title("Your Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyLocation, 19.0f));
+    }
+
+    public void startChat(View view) {
+        // מעבר לעמוד הצ'ט  אפשר כבר פה לטעון את המשתמשים שמוצגים במפה ולשלוח אותם לעמוד הצ'ט
     }
 }
