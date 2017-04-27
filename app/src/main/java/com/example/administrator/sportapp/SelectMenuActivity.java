@@ -23,8 +23,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private Button buttonSoccerBall;
     private Button buttonYoga;
     private Button buttonKaraoke;
+    private Button buttonBack;
     private String hobbies;
-    private Button buttonback;
     //defining a database reference
     private DatabaseReference databaseReference;
 
@@ -38,7 +38,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         buttonSoccerBall=   (Button) findViewById(R.id.buttonSoccerBall);
         buttonYoga=   (Button) findViewById(R.id.buttonYoga);
         buttonKaraoke=   (Button) findViewById(R.id.buttonKaraoke);
-        buttonback= (Button) findViewById(R.id.buttonback);
+        buttonBack=   (Button) findViewById(R.id.buttonBack);
+
 
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
@@ -63,7 +64,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         buttonSoccerBall.setOnClickListener(this);
         buttonYoga.setOnClickListener(this);
         buttonKaraoke.setOnClickListener(this);
-        buttonback.setOnClickListener(this);
+        buttonBack.setOnClickListener(this);
     }
 
     private void setHbbies(String s) {
@@ -104,10 +105,9 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
                 setHbbies(buttonKaraoke.getText().toString());
 
                 break;
-            case R.id.buttonback:
-                finish();
-                startActivity(new Intent(this, LoginActivity2.class));;
 
+            case R.id.buttonBack:
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 break;
 
         }
