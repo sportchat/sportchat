@@ -46,7 +46,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="קריוקי" />
+
+            <Button
+                android:id="@+id/buttonBack"
+                android:layout_width="188dp"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>
-

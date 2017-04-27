@@ -1,8 +1,10 @@
 package com.example.administrator.sportapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,19 +13,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     public double longitude;
     public double latitude;
+    private Button chat;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
 
@@ -60,7 +57,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         gps.showSettingsAlert();
     }
-
 
 }
 
@@ -119,7 +115,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyLocation, 19.0f));
     }
 
-    public void startChat(View view) {
+    public void buttonchat(View view) {
+        startActivity(new Intent(this, ChatActivity.class));
         // מעבר לעמוד הצ'ט  אפשר כבר פה לטעון את המשתמשים שמוצגים במפה ולשלוח אותם לעמוד הצ'ט
     }
+
+
 }
