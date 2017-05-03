@@ -77,7 +77,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 //        databaseReference.child(user.getUid()).child("Hobbies").setValue(hobbies);
 
         Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Hobbies");
-
+//
         reference.child(LoginActivity.user).setValue(hobbies);
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
