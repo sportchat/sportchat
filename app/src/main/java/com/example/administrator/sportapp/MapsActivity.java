@@ -116,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void buttonchat(View view) {
-        startActivity(new Intent(this, ChatActivity.class));
+        startActivity(new Intent(this, Chat.class));
         // מעבר לעמוד הצ'ט  אפשר כבר פה לטעון את המשתמשים שמוצגים במפה ולשלוח אותם לעמוד הצ'ט
     }
 

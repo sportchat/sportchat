@@ -1,43 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
 
-        <TextView
-            android:id="@+id/textViewPhoneNo"
-            android:layout_width="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.sportapp.MapsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="20"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        tools:ignore="InefficientWeight">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Phone Number : "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:orientation="vertical"
+            android:id="@+id/layout1">
 
-        <EditText
-            android:id="@+id/editTextPhoneNo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:phoneNumber="true" >
-        </EditText>
+        </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/textViewSMS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enter SMS Message : "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <EditText
-            android:id="@+id/editTextSMS"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:lines="5"
-            android:gravity="top" />
-
-        <Button
-            android:id="@+id/buttonSend"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Send" />
-
-    </LinearLayout>
+    <include
+        layout="@layout/message_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginTop="5dp"/>
+</LinearLayout>
