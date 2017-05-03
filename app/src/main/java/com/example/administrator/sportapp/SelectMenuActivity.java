@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -16,8 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    //firebase auth object
-    private FirebaseAuth firebaseAuth;
+//    //firebase auth object
+//    private FirebaseAuth firebaseAuth;
 
     private Button buttonRunning;
     private Button buttonSoccerBall;
@@ -25,8 +26,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private Button buttonKaraoke;
     private Button buttonBack;
     private String hobbies;
-    //defining a database reference
-    private DatabaseReference databaseReference;
+//    //defining a database reference
+//    private DatabaseReference databaseReference;
 
 
     @Override
@@ -40,24 +41,24 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         buttonKaraoke=   (Button) findViewById(R.id.buttonKaraoke);
         buttonBack=   (Button) findViewById(R.id.buttonBack);
 
-
-        //initializing firebase authentication object
-        firebaseAuth = FirebaseAuth.getInstance();
-
-
-        //if the user is not logged in
-        //that means current user will return null
-        if (firebaseAuth.getCurrentUser() == null) {
-            //closing this activity
-            finish();
-            //starting login activity
-            startActivity(new Intent(this, LoginActivity2.class));
-        }
-
-
-        //getting the database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-
+//
+//        //initializing firebase authentication object
+//        firebaseAuth = FirebaseAuth.getInstance();
+//
+//
+//        //if the user is not logged in
+//        //that means current user will return null
+//        if (firebaseAuth.getCurrentUser() == null) {
+//            //closing this activity
+//            finish();
+//            //starting login activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//        }
+//
+//
+//        //getting the database reference
+//        databaseReference = FirebaseDatabase.getInstance().getReference();
+//
 
         //adding listener to button
         buttonRunning.setOnClickListener(this);
@@ -69,19 +70,22 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
     private void setHbbies(String s) {
         hobbies = s;
-        //getting the current logged in user
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+//        //getting the current logged in user
+//        FirebaseUser user = firebaseAuth.getCurrentUser();
+//
+//
+//        databaseReference.child(user.getUid()).child("Hobbies").setValue(hobbies);
 
+        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Hobbies");
 
-        databaseReference.child(user.getUid()).child("Hobbies").setValue(hobbies);
-
+        reference.child(LoginActivity.user).setValue(hobbies);
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
 
 
 
 
-        startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+        startActivity(new Intent(getApplicationContext(), Users.class));
     }
 
     @Override
@@ -107,7 +111,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.buttonBack:
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
 
         }

@@ -7,14 +7,14 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.example.administrator.sportapp.RegisterActivity"
+    tools:context="com.example.administrator.sportapp.LoginActivity"
     android:orientation="vertical"
     android:gravity="center">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Login"
         android:textSize="30dp"
         android:gravity="center"
         android:layout_marginBottom="20dp"
@@ -43,18 +43,18 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/registerButton"
+        android:text="Login"
+        android:id="@+id/loginButton"
         android:layout_marginBottom="20dp"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Click here to login"
+        android:text="Click here to register"
         android:textSize="20dp"
         android:gravity="center"
-        android:id="@+id/login"
+        android:id="@+id/register"
         tools:ignore="HardcodedText,SpUsage" />
 
 </LinearLayout>

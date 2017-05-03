@@ -55,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             //closing this activity
             finish();
             //starting login activity
-            startActivity(new Intent(this, LoginActivity2.class));
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
         //getting the database reference
@@ -117,7 +117,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
 
-        databaseReference.child(user.getUid()).setValue(userInformation);
+        databaseReference.child("users").push().setValue(userInformation);
+
 
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
@@ -138,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             //closing activity
             finish();
             //starting login activity
-            startActivity(new Intent(this, LoginActivity2.class));
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
         if(view == buttonSave){
