@@ -8,10 +8,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener {
@@ -85,7 +81,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
 
 
-        startActivity(new Intent(getApplicationContext(), Users.class));
+        startActivity(new Intent(getApplicationContext(), MapsActivity.class));
     }
 
     @Override

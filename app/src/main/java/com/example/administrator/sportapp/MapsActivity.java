@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -15,16 +19,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import static com.example.administrator.sportapp.LoginActivity.user;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     public double longitude;
     public double latitude;
+    public double lat,lon;
+
     private Button chat;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
 
     private DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,42 +63,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         else
 
-    {
-        gps.showSettingsAlert();
+        {
+            gps.showSettingsAlert();
+        }
+
+
     }
-
-}
-
-
-//        //initializing firebase authentication object
-//        firebaseAuth = FirebaseAuth.getInstance();
-//
-//
-//        //getting the database reference
-//        databaseReference = FirebaseDatabase.getInstance().getReference();
-//        FirebaseUser user = firebaseAuth.getCurrentUser();
-//
-
-//        databaseReference.child(user.getUid()).addValueEventListener(
-//                new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        Map<String , String> map = dataSnapshot.getValue(Map.class);
-//                        String latitude = map.get("latitude");
-//                        String longitude = map.get("longitude");
-//
-//                        Log.v("E_VALUE", "latitude: "+ latitude);
-//                        Log.v("E_VALUE", "longitude: "+ longitude);
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-
-
 
 
 
@@ -106,13 +85,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-      //  latitude= databaseReference.child(user.getUid()).child("latitude").;
+
+        Firebase ref = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //          Map<String, Object> tt = (HashMap<String,Object>)dataSnapshot.getValue();
+                lat=dataSnapshot.child(""+user).child("latitude").getValue(Double.class);
+                lon=dataSnapshot.child(""+user).child("longitude").getValue(Double.class);
+                Toast.makeText(MapsActivity.this, ""+lon, Toast.LENGTH_LONG).show();
+                Toast.makeText(MapsActivity.this, ""+lat, Toast.LENGTH_LONG).show();
+
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+
+        //  latitude= databaseReference.child(user.getUid()).child("latitude").;
         // Add a marker in Sydney and move the camera
         LatLng MyLocation = new LatLng(latitude, longitude);
+        LatLng userLocation = new LatLng(lat,lon);
+        mMap.addMarker(new MarkerOptions().position(userLocation).title("user Location"));
+
 //        Toast.makeText(this,""+latitude,Toast.LENGTH_LONG).show();
 
-        mMap.addMarker(new MarkerOptions().position(MyLocation).title("Your Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyLocation, 19.0f));
+ //       mMap.addMarker(new MarkerOptions().position(MyLocation).title("Your Location"));
+   //     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyLocation, 19.0f));
     }
 
     public void buttonchat(View view) {
