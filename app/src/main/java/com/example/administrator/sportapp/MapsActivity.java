@@ -18,6 +18,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.example.administrator.sportapp.LoginActivity.user;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -89,7 +92,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //          Map<String, Object> tt = (HashMap<String,Object>)dataSnapshot.getValue();
+                         Map<String, Object> tt = (HashMap<String,Object>)dataSnapshot.getValue();
 
                 lat=Double.parseDouble(dataSnapshot.child(""+user).child("latitude").getValue(String.class).toString());
                 lon=Double.parseDouble(dataSnapshot.child(""+user).child("longitude").getValue(String.class).toString());
