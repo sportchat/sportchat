@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -26,7 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     public double longitude;
     public double latitude;
-    public double lat,lon;
+    public double lat=31.35,lon=35.64,lona,lata;
 
     private Button chat;
     //firebase auth object
@@ -91,27 +90,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //          Map<String, Object> tt = (HashMap<String,Object>)dataSnapshot.getValue();
-                lat=dataSnapshot.child(""+user).child("latitude").getValue(Double.class);
-                lon=dataSnapshot.child(""+user).child("longitude").getValue(Double.class);
-                Toast.makeText(MapsActivity.this, ""+lon, Toast.LENGTH_LONG).show();
-                Toast.makeText(MapsActivity.this, ""+lat, Toast.LENGTH_LONG).show();
 
+                lat=Double.parseDouble(dataSnapshot.child(""+user).child("latitude").getValue(String.class).toString());
+                lon=Double.parseDouble(dataSnapshot.child(""+user).child("longitude").getValue(String.class).toString());
+                lona=Double.parseDouble(dataSnapshot.child("ffffff").child("longitude").getValue(String.class).toString());
+                lata=Double.parseDouble(dataSnapshot.child("ffffff").child("latitude").getValue(String.class).toString());
+                LatLng user = new LatLng(lata,lona);
+                mMap.addMarker(new MarkerOptions().position(user).title("Location"));
+                LatLng userLocation = new LatLng(lat,lon);
+                mMap.addMarker(new MarkerOptions().position(userLocation).title("user Location"));
 
             }
+              @Override
+           public void onCancelled(FirebaseError firebaseError) { }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
 
-            }
         });
 
 
 
         //  latitude= databaseReference.child(user.getUid()).child("latitude").;
         // Add a marker in Sydney and move the camera
+
         LatLng MyLocation = new LatLng(latitude, longitude);
-        LatLng userLocation = new LatLng(lat,lon);
-        mMap.addMarker(new MarkerOptions().position(userLocation).title("user Location"));
+
+
+     //   mMap.addMarker(new MarkerOptions().position(MyLocation).title("Location"));
+
 
 //        Toast.makeText(this,""+latitude,Toast.LENGTH_LONG).show();
 
