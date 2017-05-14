@@ -1,132 +1,134 @@
 package com.example.administrator.sportapp;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.administrator.sportapp.R;
+
 import com.firebase.client.Firebase;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class LoginActivity extends AppCompatActivity {
-    TextView register;
-    EditText username, password;
-    Button loginButton;
-    String pass;
-    public static String user;
-    public double latitude;
-    public double longitude;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-        register = (TextView)findViewById(R.id.register);
-        username = (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
-        loginButton = (Button)findViewById(R.id.loginButton);
+        //defining views
+        private Button buttonSignIn;
+        private EditText editTextEmail;
+        private EditText editTextPassword;
+        private TextView textViewSignup;
+        public double latitude;
+        public double longitude;
+        //firebase auth object
+        private FirebaseAuth firebaseAuth;
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        //progress dialog
+        private ProgressDialog progressDialog;
+
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
+
+            //getting firebase auth object
+            firebaseAuth = FirebaseAuth.getInstance();
+
+            //if the objects getcurrentuser method is not null
+            //means user is already logged in
+            if(firebaseAuth.getCurrentUser() != null){
+                //close this activity
+                finish();
+                //opening profile activity
+                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             }
-        });
+
+            //initializing views
+            editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+            editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+            buttonSignIn = (Button) findViewById(R.id.buttonSignin);
+            textViewSignup  = (TextView) findViewById(R.id.textViewSignUp);
+
+            progressDialog = new ProgressDialog(this);
+
+            //attaching click listener
+            buttonSignIn.setOnClickListener(this);
+            textViewSignup.setOnClickListener(this);
+        }
+
+        //method for user login
+        private void userLogin(){
+            String email = editTextEmail.getText().toString().trim();
+            String password  = editTextPassword.getText().toString().trim();
 
 
+            //checking if email and passwords are empty
+            if(TextUtils.isEmpty(email)){
+                Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+                return;
+            }
 
+            if(TextUtils.isEmpty(password)){
+                Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+                return;
+            }
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user = username.getText().toString();
-                pass = password.getText().toString();
+            //if the email and password are not empty
+            //displaying a progress dialog
 
-                if(user.equals("")){
-                    username.setError("can't be blank");
-                }
-                else if(pass.equals("")){
-                    password.setError("can't be blank");
-                }
-                else{
-                    String url = "https://sportapp-74b9c.firebaseio.com/Users.json";
-                    final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
-                    pd.setMessage("Loading...");
-                    pd.show();
+            progressDialog.setMessage("Registering Please Wait...");
+            progressDialog.show();
 
-                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+            //logging in the user
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onResponse(String s) {
-                            if(s.equals("null")){
-                                Toast.makeText(LoginActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            //if the task is successfull
+                            if(task.isSuccessful()){
+                                saveLocation();
+                                //start the profile activity
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
                             }
-                            else{
-                                try {
-                                    JSONObject obj = new JSONObject(s);
-
-                                    if(!obj.has(user)){
-                                        Toast.makeText(LoginActivity.this, "user not found", Toast.LENGTH_LONG).show();
-                                    }
-                                    else if(obj.getJSONObject(user).getString("password").equals(pass)){
-                                        UserDetails.username = user;
-                                        UserDetails.password = pass;
-                                        saveLocation();
-                                        startActivity(new Intent(LoginActivity.this, SelectMenuActivity.class));
-                                    }
-                                    else {
-                                        Toast.makeText(LoginActivity.this, "incorrect password", Toast.LENGTH_LONG).show();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            pd.dismiss();
-                        }
-                    },new Response.ErrorListener(){
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            System.out.println("" + volleyError);
-                            pd.dismiss();
                         }
                     });
 
-                    RequestQueue rQueue = Volley.newRequestQueue(LoginActivity.this);
-                    rQueue.add(request);
-                }
+        }
 
+        @Override
+        public void onClick(View view) {
+            if(view == buttonSignIn){
+                userLogin();
             }
-        });
-    }
 
-    private void saveLocation() {
-        //save Gps location
+            if(view == textViewSignup){
+                finish();
+                startActivity(new Intent(this, RegisterActivity.class));
+            }
+        }
 
-        GPSTracker gps;
 
-        gps = new GPSTracker(LoginActivity.this);
+        private void saveLocation() {
+            //save Gps location
 
-        if (gps.canGetLocation()) {
-            latitude = gps.getLatitude();
-            longitude = gps.getLongitude();
+            GPSTracker gps;
+
+            gps = new GPSTracker(LoginActivity.this);
+
+            if (gps.canGetLocation()) {
+                latitude = gps.getLatitude();
+                longitude = gps.getLongitude();
 
 
 //
@@ -134,14 +136,13 @@ public class LoginActivity extends AppCompatActivity {
 //                    getApplicationContext(),
 //                    "Your Location is -\nLat: " + latitude + "\nLong: "
 //                            + longitude, Toast.LENGTH_LONG).show();
-        } else {
-            gps.showSettingsAlert();
+            } else {
+                gps.showSettingsAlert();
+            }
+            Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
+
+            Location location = new Location(latitude, longitude);
+            reference.child(RegisterActivity.user).setValue(location);
+
         }
-        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
-
-        Location location = new Location(latitude, longitude);
-        reference.child(user).setValue(location);
-
     }
-
-}

@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.administrator.sportapp.LoginActivity.user;
+import static com.example.administrator.sportapp.RegisterActivity.user;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -92,20 +92,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                         Map<String, Object> tt = (HashMap<String,Object>)dataSnapshot.getValue();
+                Map<String, Object> tt = (HashMap<String,Object>)dataSnapshot.getValue();
 
+                String user = RegisterActivity.user;
                 lat=Double.parseDouble(dataSnapshot.child(""+user).child("latitude").getValue(String.class).toString());
                 lon=Double.parseDouble(dataSnapshot.child(""+user).child("longitude").getValue(String.class).toString());
                 lona=Double.parseDouble(dataSnapshot.child("ffffff").child("longitude").getValue(String.class).toString());
                 lata=Double.parseDouble(dataSnapshot.child("ffffff").child("latitude").getValue(String.class).toString());
-                LatLng user = new LatLng(lata,lona);
-                mMap.addMarker(new MarkerOptions().position(user).title("Location"));
+
                 LatLng userLocation = new LatLng(lat,lon);
                 mMap.addMarker(new MarkerOptions().position(userLocation).title("user Location"));
 
             }
-              @Override
-           public void onCancelled(FirebaseError firebaseError) { }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) { }
 
 
         });
@@ -118,13 +118,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng MyLocation = new LatLng(latitude, longitude);
 
 
-     //   mMap.addMarker(new MarkerOptions().position(MyLocation).title("Location"));
+        //   mMap.addMarker(new MarkerOptions().position(MyLocation).title("Location"));
 
 
 //        Toast.makeText(this,""+latitude,Toast.LENGTH_LONG).show();
 
- //       mMap.addMarker(new MarkerOptions().position(MyLocation).title("Your Location"));
-   //     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyLocation, 19.0f));
+        //       mMap.addMarker(new MarkerOptions().position(MyLocation).title("Your Location"));
+        //     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyLocation, 19.0f));
     }
 
     public void buttonchat(View view) {

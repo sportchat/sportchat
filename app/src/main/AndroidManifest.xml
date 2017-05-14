@@ -14,14 +14,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterActivity">
+        <activity android:name="com.example.administrator.sportapp.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name="com.example.administrator.sportapp.LoginActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SelectMenuActivity" />
         <activity android:name=".Users" />
