@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.administrator.sportapp.LoginActivity" />
-        <activity android:name=".ProfileActivity" />
         <activity android:name=".SelectMenuActivity" />
         <activity android:name=".Users" />
 

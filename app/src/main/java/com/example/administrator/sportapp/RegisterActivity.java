@@ -1,13 +1,11 @@
 package com.example.administrator.sportapp;
 
 
-
-
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -92,14 +90,32 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             user = username.getText().toString();
             pass = password.getText().toString();
 
+            //getting email and password from edit texts
+            String email = editTextEmail.getText().toString().trim();
+            String password  = editTextPassword.getText().toString().trim();
+
+            //checking if email and passwords are empty
+            if(TextUtils.isEmpty(email)){
+                Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if(TextUtils.isEmpty(password)){
+                Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+                return;
+            }
             if(user.equals("")){
                 username.setError("can't be blank");
+                return;
             }
             else if(!user.matches("[A-Za-z0-9]+")){
                 username.setError("only alphabet or number allowed");
+                return;
+
             }
             else if(user.length()<5){
                 username.setError("at least 5 characters long");
+                return;
             }
             else {
                 final ProgressDialog pd = new ProgressDialog(RegisterActivity.this);
@@ -148,22 +164,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 rQueue.add(request);
             }
 
-
-            //getting email and password from edit texts
-            String email = editTextEmail.getText().toString().trim();
-            String password  = editTextPassword.getText().toString().trim();
-
-            //checking if email and passwords are empty
-            if(TextUtils.isEmpty(email)){
-                Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if(TextUtils.isEmpty(password)){
-                Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
-                return;
-            }
-
             //if the email and password are not empty
             //displaying a progress dialog
 
@@ -178,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             //checking if success
                             if(task.isSuccessful()){
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
                             }else{
                                 //display some message here
                                 Toast.makeText(RegisterActivity.this,"Registration Error",Toast.LENGTH_LONG).show();

@@ -2,9 +2,9 @@ package com.example.administrator.sportapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,8 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
         private EditText editTextEmail;
         private EditText editTextPassword;
         private TextView textViewSignup;
-        public double latitude;
-        public double longitude;
+//        public double latitude;
+//        public double longitude;
         //firebase auth object
         private FirebaseAuth firebaseAuth;
 
@@ -49,7 +48,7 @@ import com.google.firebase.auth.FirebaseAuth;
                 //close this activity
                 finish();
                 //opening profile activity
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
             }
 
             //initializing views
@@ -96,7 +95,7 @@ import com.google.firebase.auth.FirebaseAuth;
                             progressDialog.dismiss();
                             //if the task is successfull
                             if(task.isSuccessful()){
-                                saveLocation();
+                             //   saveLocation();
                                 //start the profile activity
                                 finish();
                                 startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
@@ -119,30 +118,30 @@ import com.google.firebase.auth.FirebaseAuth;
         }
 
 
-        private void saveLocation() {
-            //save Gps location
-
-            GPSTracker gps;
-
-            gps = new GPSTracker(LoginActivity.this);
-
-            if (gps.canGetLocation()) {
-                latitude = gps.getLatitude();
-                longitude = gps.getLongitude();
-
-
+//        private void saveLocation() {
+//            //save Gps location
 //
-//            Toast.makeText(
-//                    getApplicationContext(),
-//                    "Your Location is -\nLat: " + latitude + "\nLong: "
-//                            + longitude, Toast.LENGTH_LONG).show();
-            } else {
-                gps.showSettingsAlert();
-            }
-            Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
-
-            Location location = new Location(latitude, longitude);
-            reference.child(RegisterActivity.user).setValue(location);
-
-        }
+//            GPSTracker gps;
+//
+//            gps = new GPSTracker(LoginActivity.this);
+//
+//            if (gps.canGetLocation()) {
+//                latitude = gps.getLatitude();
+//                longitude = gps.getLongitude();
+//
+//
+////
+////            Toast.makeText(
+////                    getApplicationContext(),
+////                    "Your Location is -\nLat: " + latitude + "\nLong: "
+////                            + longitude, Toast.LENGTH_LONG).show();
+//            } else {
+//                gps.showSettingsAlert();
+//            }
+//            Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
+//
+//            Location location = new Location(latitude, longitude);
+//            reference.child(RegisterActivity.user).setValue(location);
+//
+//        }
     }

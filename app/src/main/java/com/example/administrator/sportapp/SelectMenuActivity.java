@@ -8,20 +8,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
 
 //    //firebase auth object
-//    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
 
     private Button buttonRunning;
     private Button buttonSoccerBall;
     private Button buttonYoga;
     private Button buttonKaraoke;
-    private Button buttonBack;
+    private Button buttonLogOut;
     public static String hobbies;
+    public double latitude;
+    public double longitude;
 
 //    //defining a database reference
 //    private DatabaseReference databaseReference;
@@ -36,9 +39,9 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         buttonSoccerBall=   (Button) findViewById(R.id.buttonSoccerBall);
         buttonYoga=   (Button) findViewById(R.id.buttonYoga);
         buttonKaraoke=   (Button) findViewById(R.id.buttonKaraoke);
-        buttonBack=   (Button) findViewById(R.id.buttonBack);
+        buttonLogOut=   (Button) findViewById(R.id.buttonLogOut);
 
-//
+
 //        //initializing firebase authentication object
 //        firebaseAuth = FirebaseAuth.getInstance();
 //
@@ -62,8 +65,38 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         buttonSoccerBall.setOnClickListener(this);
         buttonYoga.setOnClickListener(this);
         buttonKaraoke.setOnClickListener(this);
-        buttonBack.setOnClickListener(this);
+        buttonLogOut.setOnClickListener(this);
     }
+
+
+
+    private void saveLocation() {
+            //save Gps location
+
+            GPSTracker gps;
+
+            gps = new GPSTracker(SelectMenuActivity.this);
+
+            if (gps.canGetLocation()) {
+                latitude = gps.getLatitude();
+                longitude = gps.getLongitude();
+
+
+//
+//            Toast.makeText(
+//                    getApplicationContext(),
+//                    "Your Location is -\nLat: " + latitude + "\nLong: "
+//                            + longitude, Toast.LENGTH_LONG).show();
+            } else {
+                gps.showSettingsAlert();
+            }
+            Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
+
+            Location location = new Location(latitude, longitude);
+            reference.child(RegisterActivity.user).setValue(location);
+
+        }
+
 
     private void setHbbies(String s) {
         hobbies = s;
@@ -73,14 +106,17 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 //
 //        databaseReference.child(user.getUid()).child("Hobbies").setValue(hobbies);
 
+        finish();
+
         Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Hobbies/"+hobbies);
-//
-      //  reference.child(LoginActivity.user).setValue(hobbies);
+
+        reference.child(RegisterActivity.user).setValue(hobbies);
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
 
 
 
+saveLocation();
 
         startActivity(new Intent(getApplicationContext(), MapsActivity.class));
     }
@@ -107,8 +143,17 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
                 break;
 
-            case R.id.buttonBack:
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            case R.id.buttonLogOut:
+
+//    //getting firebase auth object
+       firebaseAuth = FirebaseAuth.getInstance();
+                //logging out the user
+                firebaseAuth.signOut();
+                //closing activity
+                finish();
+                //starting login activity
+                startActivity(new Intent(this, LoginActivity.class));
+
                 break;
 
         }

@@ -17,42 +17,85 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="343dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
             <Button
                 android:id="@+id/buttonRunning"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ריצה" />
+                android:background="@drawable/buttonshape"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="ריצה"
+                tools:ignore="HardcodedText,UnusedAttribute" />
 
             <Button
                 android:id="@+id/buttonSoccerBall"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="כדורגל" />
+                android:background="@drawable/buttonshape"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="כדורגל"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/buttonYoga"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="יוגה" />
+                android:background="@drawable/buttonshape"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="יוגה"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/buttonKaraoke"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="קריוקי" />
+                android:background="@drawable/buttonshape"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="קריוקי"
+                tools:ignore="HardcodedText" />
 
             <Button
-                android:id="@+id/buttonBack"
-                android:layout_width="188dp"
+                android:id="@+id/buttonLogOut"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:background="@drawable/buttonshape"
+                android:shadowColor="#A8A8A8"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Log out"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
         </LinearLayout>
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>
