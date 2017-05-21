@@ -14,14 +14,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.example.administrator.sportapp.RegisterActivity.user;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -97,12 +96,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String user = RegisterActivity.user;
                 lat=Double.parseDouble(dataSnapshot.child(""+user).child("latitude").getValue(String.class).toString());
                 lon=Double.parseDouble(dataSnapshot.child(""+user).child("longitude").getValue(String.class).toString());
-                lona=Double.parseDouble(dataSnapshot.child("ffffff").child("longitude").getValue(String.class).toString());
-                lata=Double.parseDouble(dataSnapshot.child("ffffff").child("latitude").getValue(String.class).toString());
+                lona=Double.parseDouble(dataSnapshot.child("david").child("longitude").getValue(String.class).toString());
+                lata=Double.parseDouble(dataSnapshot.child("david").child("latitude").getValue(String.class).toString());
 
                 LatLng userLocation = new LatLng(lat,lon);
-                mMap.addMarker(new MarkerOptions().position(userLocation).title("user Location"));
+                LatLng userLocation2 = new LatLng(lata,lona);
+                mMap.addMarker(new MarkerOptions().position(userLocation).title("user"));
+                mMap.addMarker(new MarkerOptions().position(userLocation2).title("david"));
 
+                mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+                {
+
+                    @Override
+                    public void onInfoWindowClick(Marker arg0) {
+                        if(arg0 != null && arg0.getTitle().equals("user")){
+                            Intent intent1 = new Intent(MapsActivity.this, Chat.class);
+                            startActivity(intent1);}      }
+                });
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) { }
