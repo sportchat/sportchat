@@ -1,6 +1,7 @@
 package com.example.administrator.sportapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,12 +13,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-    public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
 
         //defining views
@@ -97,6 +103,35 @@ import com.google.firebase.auth.FirebaseAuth;
                             if(task.isSuccessful()){
                              //   saveLocation();
                                 //start the profile activity
+
+                                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;//get user id from firebase
+                                Toast.makeText(LoginActivity.this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+
+                                Firebase nameReference = new Firebase("https://sportapp-74b9c.firebaseio.com/usersName/"+currentFirebaseUser.getUid());
+
+
+                                nameReference.addValueEventListener(new ValueEventListener() {// get currenr user name  from firebase
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                        RegisterActivity.user= (dataSnapshot.child("name").getValue(String.class));
+
+                                        Context context = getApplicationContext();
+                                        CharSequence text = RegisterActivity.user;
+                                        int duration = Toast.LENGTH_SHORT;
+
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+                                        // do your stuff here with value
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(FirebaseError firebaseError) {
+
+                                    }
+                                });
                                 finish();
                                 startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
                             }

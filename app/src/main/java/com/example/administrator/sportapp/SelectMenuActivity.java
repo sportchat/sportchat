@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-//    //firebase auth object
+    //    //firebase auth object
     private FirebaseAuth firebaseAuth;
 
     private Button buttonRunning;
@@ -71,15 +71,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
 
     private void saveLocation() {
-            //save Gps location
+        //save Gps location
 
-            GPSTracker gps;
+        GPSTracker gps;
 
-            gps = new GPSTracker(SelectMenuActivity.this);
+        gps = new GPSTracker(SelectMenuActivity.this);
 
-            if (gps.canGetLocation()) {
-                latitude = gps.getLatitude();
-                longitude = gps.getLongitude();
+        if (gps.canGetLocation()) {
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
 
 
 //
@@ -87,15 +87,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 //                    getApplicationContext(),
 //                    "Your Location is -\nLat: " + latitude + "\nLong: "
 //                            + longitude, Toast.LENGTH_LONG).show();
-            } else {
-                gps.showSettingsAlert();
-            }
-            Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
-
-            Location location = new Location(latitude, longitude);
-            reference.child(RegisterActivity.user).setValue(location);
-
+        } else {
+            gps.showSettingsAlert();
         }
+        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
+
+        Location location = new Location(latitude, longitude);
+        reference.child(RegisterActivity.user).setValue(location);
+
+    }
 
 
     private void setHbbies(String s) {
@@ -116,7 +116,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
 
 
-saveLocation();
+        saveLocation();
 
         startActivity(new Intent(getApplicationContext(), MapsActivity.class));
     }
@@ -146,7 +146,7 @@ saveLocation();
             case R.id.buttonLogOut:
 
 //    //getting firebase auth object
-       firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth = FirebaseAuth.getInstance();
                 //logging out the user
                 firebaseAuth.signOut();
                 //closing activity
