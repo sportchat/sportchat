@@ -29,22 +29,22 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        layout = (LinearLayout)findViewById(R.id.layout1);
-        sendButton = (ImageView)findViewById(R.id.sendButton);
-        messageArea = (EditText)findViewById(R.id.messageArea);
-        scrollView = (ScrollView)findViewById(R.id.scrollView);
+        layout = (LinearLayout) findViewById(R.id.layout1);
+        sendButton = (ImageView) findViewById(R.id.sendButton);
+        messageArea = (EditText) findViewById(R.id.messageArea);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         Firebase.setAndroidContext(this);
         reference1 = new Firebase("https://sportapp-74b9c.firebaseio.com/Message/" + UserDetails.username + "_" + UserDetails.chatWith);
         reference2 = new Firebase("https://sportapp-74b9c.firebaseio.com/Message/" + UserDetails.chatWith + "_" + UserDetails.username);
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String messageText = messageArea.getText().toString();
 
-                messageArea.setText("");
-                if(!messageText.equals("")){
+                if (!messageText.equals("")) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
                     map.put("user", UserDetails.username);
@@ -61,10 +61,9 @@ public class Chat extends AppCompatActivity {
                 String message = map.get("message").toString();
                 String userName = map.get("user").toString();
 
-                if(userName.equals(UserDetails.username)){
+                if (userName.equals(UserDetails.username)) {
                     addMessageBox("You:-\n" + message, 1);
-                }
-                else{
+                } else {
                     addMessageBox(UserDetails.chatWith + ":-\n" + message, 2);
                 }
             }
@@ -91,21 +90,21 @@ public class Chat extends AppCompatActivity {
         });
     }
 
-    public void addMessageBox(String message, int type){
+    public void addMessageBox(String message, int type) {
         TextView textView = new TextView(Chat.this);
         textView.setText(message);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 0, 10);
         textView.setLayoutParams(lp);
 
-        if(type == 1) {
+        if (type == 1) {
             textView.setBackgroundResource(R.drawable.rounded_corner1);
-        }
-        else{
+        } else {
             textView.setBackgroundResource(R.drawable.rounded_corner2);
         }
 
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
+
 }
