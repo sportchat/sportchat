@@ -3,14 +3,13 @@ package com.example.administrator.sportapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.firebase.client.core.view.View;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,7 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public double longitude;
     public double latitude;
     public double lat=31.35,lon=35.64,lona,lata;
-
+    List<String> lst = new ArrayList<String>();
     private Button chat;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -93,18 +92,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Firebase ref = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
         ref.addValueEventListener(new ValueEventListener() {
-                                      @Override
-                                      public void onDataChange(DataSnapshot dataSnapshot) {
-                                          List<String> lst = new ArrayList<String>(); // Result will be holded Here
-                                          for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                                              lst.add(String.valueOf(dsp.getKey())); //add result into array list
-                                          }
-                                          for (String data : lst) {
-                                              Toast.makeText(MapsActivity.this, ""+data, Toast.LENGTH_LONG).show();
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Result will be holded Here
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    lst.add(String.valueOf(dsp.getKey())); //add result into array list
+                }
+                for (String data : lst) {
 
                                               lata=Double.parseDouble(dataSnapshot.child(""+data).child("latitude").getValue(String.class).toString());
                                               lona=Double.parseDouble(dataSnapshot.child(""+data).child("longitude").getValue(String.class).toString());
                                               LatLng userLocation2 = new LatLng(lata,lona);
+                                              if ((userLocation2.latitude!=0.0 || userLocation2.latitude!=0.0))
                                               mMap.addMarker(new MarkerOptions().position(userLocation2).title(""+data));
                                           }
 
@@ -122,9 +121,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     @Override
                     public void onInfoWindowClick(Marker arg0) {
-                        if(arg0 != null && arg0.getTitle().equals("user")){
-                            Intent intent1 = new Intent(MapsActivity.this, Chat.class);
-                            startActivity(intent1);}      }
+                        for (String data : lst)
+                        if(arg0 != null && arg0.getTitle().equals(""+data)) {
+                            UserDetails.chatWith = data;
+                            startActivity(new Intent(MapsActivity.this, Chat.class));
+
+                        }      }
                 });
             }
             @Override
@@ -150,10 +152,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MyLocation, 19.0f));
     }
 
-    public void buttonchat(View view) {
-        startActivity(new Intent(this, Users.class));
-        // מעבר לעמוד הצ'ט  אפשר כבר פה לטעון את המשתמשים שמוצגים במפה ולשלוח אותם לעמוד הצ'ט
-    }
 
+    public void buttonChat(View view) {
+        startActivity(new Intent(this, Users.class));
 
 }
+    public void buttonCBack(View view) {
+        startActivity(new Intent(this, SelectMenuActivity.class));
+    }}
