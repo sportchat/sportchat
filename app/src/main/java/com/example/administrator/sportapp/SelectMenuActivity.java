@@ -1,19 +1,28 @@
 package com.example.administrator.sportapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
 
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    private final int SELECT_PICTURE = 1234;
     //    //firebase auth object
     private FirebaseAuth firebaseAuth;
 
@@ -25,7 +34,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     public static String hobbies;
     public double latitude;
     public double longitude;
-
+    private ImageButton myImage;
 //    //defining a database reference
 //    private DatabaseReference databaseReference;
 
@@ -40,8 +49,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         buttonYoga=   (Button) findViewById(R.id.buttonYoga);
         buttonKaraoke=   (Button) findViewById(R.id.buttonKaraoke);
         buttonLogOut=   (Button) findViewById(R.id.buttonLogOut);
-
-
+        myImage = (ImageButton) findViewById(R.id.myButton);
+//        setButtonsLock(false);
 //        //initializing firebase authentication object
 //        firebaseAuth = FirebaseAuth.getInstance();
 //
@@ -159,4 +168,61 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+
+    public void goToGallery(View view) {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+        startActivityForResult(chooserIntent, SELECT_PICTURE);
+
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+                String selectedImagePath = getPath(selectedImageUri);
+                System.out.println("Image Path : " + selectedImagePath);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                    //TODO - upload bitmap as bytearray to firebase
+
+                    myImage.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+    public void  addtofirebace(String smyimage) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("https://sportapp-74b9c.firebaseio.com/image");
+    }
 }
+   /* public void  converttostring(Bitmap chicken) {
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);//your image
+        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+        bmp.recycle();
+        byte[] byteArray = bYtE.toByteArray();
+        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+}*/
