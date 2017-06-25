@@ -3,10 +3,12 @@ package com.example.administrator.sportapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
@@ -216,13 +219,13 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("https://sportapp-74b9c.firebaseio.com/image");
     }
-}
-   /* public void  converttostring(Bitmap chicken) {
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);//your image
+
+   public void  converttostring(Bitmap chicken) {
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.add);//your image
         ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
         bmp.recycle();
         byte[] byteArray = bYtE.toByteArray();
         String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
-}*/
+}
