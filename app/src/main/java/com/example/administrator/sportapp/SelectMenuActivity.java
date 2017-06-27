@@ -1,8 +1,12 @@
 package com.example.administrator.sportapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,6 +39,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     public double latitude;
     public double longitude;
     private ImageButton myImage;
+    public boolean flag=false;
+    private String strImadeDefoult;
 //    //defining a database reference
 //    private DatabaseReference databaseReference;
 
@@ -50,7 +56,10 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         buttonKaraoke=   (Button) findViewById(R.id.buttonKaraoke);
         buttonLogOut=   (Button) findViewById(R.id.buttonLogOut);
         myImage = (ImageButton) findViewById(R.id.myButton);
-//        setButtonsLock(false);
+
+
+
+        //        setButtonsLock(false);
 //        //initializing firebase authentication object
 //        firebaseAuth = FirebaseAuth.getInstance();
 //
@@ -127,6 +136,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
         saveLocation();
 
+        if(flag==false) {
+            Drawable myDrawable = getResources().getDrawable(R.drawable.add);
+
+            Bitmap bitmapD = ((BitmapDrawable) myDrawable).getBitmap();
+            //TODO - upload bitmap as bytearray to firebase
+
+            strImadeDefoult = converttostring(bitmapD);
+            addtofirebace(strImadeDefoult);
+        }
         startActivity(new Intent(getApplicationContext(), MapsActivity.class));
     }
 
@@ -161,6 +179,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
                 //closing activity
                 finish();
                 //starting login activity
+
                 startActivity(new Intent(this, LoginActivity.class));
 
                 break;
@@ -224,10 +243,12 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     }
 
     public String converttostring(Bitmap bitmap) {
-            ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-            byte [] b=baos.toByteArray();
-            String temp=Base64.encodeToString(b, Base64.DEFAULT);
-    return temp;
+
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        flag=true;
+        return temp;
     }
 }

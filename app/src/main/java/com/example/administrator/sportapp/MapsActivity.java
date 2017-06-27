@@ -80,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
+        Firebase ref2 = new Firebase("https://sportapp-74b9c.firebaseio.com/Image");
         Firebase ref = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -91,21 +91,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     lst.add(String.valueOf(dsp.getKey())); //add result into array list
                 }
                 for (String data : lst) {
+                    lat = Double.parseDouble(dataSnapshot.child("" + user).child("latitude").getValue(String.class).toString());
+                    lon = Double.parseDouble(dataSnapshot.child("" + user).child("longitude").getValue(String.class).toString());
 
                     lata = Double.parseDouble(dataSnapshot.child("" + data).child("latitude").getValue(String.class).toString());
                     lona = Double.parseDouble(dataSnapshot.child("" + data).child("longitude").getValue(String.class).toString());
                     LatLng userLocation2 = new LatLng(lata, lona);
-                    if ((userLocation2.latitude != 0.0 || userLocation2.latitude != 0.0)) {
+                    if ((userLocation2.latitude <lat +0.15 && userLocation2.latitude >lat -0.15 )  //check if the user's location betwin +\- 0.15 pixel
+                            && (userLocation2.longitude <lon +0.15 && userLocation2.longitude >lon -0.15 )
+                            &&(userLocation2.latitude != 0.0 || userLocation2.latitude != 0.0)) {
                         mMap.addMarker(new MarkerOptions().position(userLocation2).title("" + data));
                      /* to do  byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);*/
                     }
 
                 }
-
-
                 lat = Double.parseDouble(dataSnapshot.child("" + user).child("latitude").getValue(String.class).toString());
                 lon = Double.parseDouble(dataSnapshot.child("" + user).child("longitude").getValue(String.class).toString());
+
 
                 LatLng userLocation = new LatLng(lat, lon);
 
@@ -116,12 +119,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     @Override
                     public void onInfoWindowClick(Marker arg0) {
-                        setImageButton(R.drawable.add); //TODO - use the pressed contact's image
 
                         for (String data : lst) {
+
                             if (arg0 != null && arg0.getTitle().equals("" + data)) {
-                                UserDetails.chatWith = data;
-//                               startActivity(new Intent(MapsActivity.this, Chat.class));
+                                setImageButton(data); //TODO - use the pressed contact's image
+
+//                                UserDetails.chatWith = data;
+////                               startActivity(new Intent(MapsActivity.this, Chat.class));
                             }
                         }
                     }
@@ -162,16 +167,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(new Intent(this, SelectMenuActivity.class));
     }
 
-    public void changeImage(View view) {
-        //TODO - get image
+    private void setImageButton(final String titleUserName) {
+        Firebase refI = new Firebase("https://sportapp-74b9c.firebaseio.com/image/");
+        refI.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String strImage= (dataSnapshot.child(""+titleUserName).getValue(String.class));
+
+                Bitmap bitmap =StringToBitMap(strImage);
+                friendImage.setVisibility(View.VISIBLE);
+
+                friendImage.setImageBitmap(bitmap);
+
+                friendImage.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        UserDetails.chatWith = titleUserName;
+                        startActivity(new Intent(MapsActivity.this, Chat.class));
+
+                    }
+                });
+
+            }
+
+
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+
+        });
 
     }
 
-    private void setImageButton(int drawable) {
-        friendImage.setVisibility(View.VISIBLE);
-
-        friendImage.setBackgroundResource(drawable);
-    }
     public Bitmap StringToBitMap(String encodedString){
         try {
             byte [] encodeByte=Base64.decode(encodedString, Base64.DEFAULT);
@@ -181,5 +208,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.getMessage();
             return null;
         }
+    }
+
+
+    public void chat_With_User() {
+
+
     }
 }

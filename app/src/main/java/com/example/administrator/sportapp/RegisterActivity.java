@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             username.setError("can't be blank");
             return;
         }
-        else if(!user.matches("[A-Za-z0-9]+")){
+        else if(!user.matches("[A-Za-z0-9א-ת]+")){
             username.setError("only alphabet or number allowed");
             return;
 
@@ -228,7 +228,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
                             databaseReference.child("usersName").child(user.getUid()).setValue(userInformation);
-
 
 
                             startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));

@@ -64,7 +64,7 @@
         app:srcCompat="@mipmap/ic_launcher"
         android:layout_above="@+id/buttonBack"
         android:layout_centerHorizontal="true"
-        android:onClick="changeImage"/>
+        android:onClick="chat_With_User"/>
 
     />
 </RelativeLayout>

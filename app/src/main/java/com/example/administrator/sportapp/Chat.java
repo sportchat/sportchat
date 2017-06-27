@@ -34,6 +34,8 @@ public class Chat extends AppCompatActivity {
         messageArea = (EditText) findViewById(R.id.messageArea);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
+        UserDetails.username=RegisterActivity.user;
+
         Firebase.setAndroidContext(this);
         reference1 = new Firebase("https://sportapp-74b9c.firebaseio.com/Message/" + UserDetails.username + "_" + UserDetails.chatWith);
         reference2 = new Firebase("https://sportapp-74b9c.firebaseio.com/Message/" + UserDetails.chatWith + "_" + UserDetails.username);
