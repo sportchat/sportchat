@@ -200,7 +200,6 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
                     bitmap = Bitmap.createScaledBitmap(bitmap,350,350,true);
 
-                    Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
                     String arr =converttostring(bitmap);
                     addtofirebace(arr);
                     myImage.setImageBitmap(bitmap);
