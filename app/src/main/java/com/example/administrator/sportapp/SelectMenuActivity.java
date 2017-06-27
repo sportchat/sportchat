@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,9 +15,8 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
@@ -194,13 +194,20 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
                 String selectedImagePath = getPath(selectedImageUri);
                 System.out.println("Image Path : " + selectedImagePath);
                 try {
+
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
                     //TODO - upload bitmap as bytearray to firebase
 
+                    bitmap = Bitmap.createScaledBitmap(bitmap,350,350,true);
+
+                    Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+                    String arr =converttostring(bitmap);
+                    addtofirebace(arr);
                     myImage.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
         }
     }
@@ -213,16 +220,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         return cursor.getString(column_index);
     }
     public void  addtofirebace(String smyimage) {
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("https://sportapp-74b9c.firebaseio.com/image");
+        Firebase ref = new Firebase("https://sportapp-74b9c.firebaseio.com/image/");
+        ref.child(RegisterActivity.user).setValue(smyimage);
+    }
+
+    public String converttostring(Bitmap bitmap) {
+            ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+            byte [] b=baos.toByteArray();
+            String temp=Base64.encodeToString(b, Base64.DEFAULT);
+    return temp;
     }
 }
-   /* public void  converttostring(Bitmap chicken) {
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.chicken);//your image
-        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
-        bmp.recycle();
-        byte[] byteArray = bYtE.toByteArray();
-        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-}*/

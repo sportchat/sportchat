@@ -1,8 +1,11 @@
 package com.example.administrator.sportapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -33,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public double latitude;
     public double lat = 31.35, lon = 35.64, lona, lata;
     List<String> lst = new ArrayList<String>();
+    List<String> lst2 = new ArrayList<String>();
     private Button chat;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -62,14 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             latitude = gps.getLatitude();
             longitude = gps.getLongitude();
 
-
         }
-
-//
-//            Toast.makeText(
-//                    getApplicationContext(),
-//                    "Your Location is -\nLat: " + latitude + "\nLong: "
-//                            + longitude, Toast.LENGTH_LONG).show();
 
         else
 
@@ -77,19 +74,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             gps.showSettingsAlert();
         }
 
-
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -135,8 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         for (String data : lst) {
                             if (arg0 != null && arg0.getTitle().equals("" + data)) {
                                 UserDetails.chatWith = data;
-//                                startActivity(new Intent(MapsActivity.this, Chat.class));
-
+//                               startActivity(new Intent(MapsActivity.this, Chat.class));
                             }
                         }
                     }
@@ -186,5 +171,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         friendImage.setVisibility(View.VISIBLE);
 
         friendImage.setBackgroundResource(drawable);
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }
