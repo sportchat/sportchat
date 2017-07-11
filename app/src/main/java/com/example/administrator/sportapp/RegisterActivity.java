@@ -69,7 +69,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if(firebaseAuth.getCurrentUser() != null){
 
             FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-            Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
 
             Firebase nameReference = new Firebase("https://sportapp-74b9c.firebaseio.com/usersName/"+currentFirebaseUser.getUid());
 
@@ -82,13 +81,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     user= (dataSnapshot.child("name").getValue(String.class));
 
             Context context = getApplicationContext();
-            CharSequence text = user;
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-                    // do your stuff here with value
-
+//            CharSequence text = user;
+//            int duration = Toast.LENGTH_SHORT;
+//
+//            Toast toast = Toast.makeText(context, text, duration);
+//            toast.show();
+//
                 }
 
                 @Override
@@ -230,7 +228,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             databaseReference.child("usersName").child(user.getUid()).setValue(userInformation);
 
 
-                            startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
+                            startActivity(new Intent(getApplicationContext(), Profile.class));
                         }else{
                             //display some message here
                             Toast.makeText(RegisterActivity.this,"Registration Error",Toast.LENGTH_LONG).show();

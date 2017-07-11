@@ -15,6 +15,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -38,7 +39,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     public static String hobbies;
     public double latitude;
     public double longitude;
-    private ImageButton myImage;
+    private ImageButton settingClick;
     public boolean flag=false;
     private String strImadeDefoult;
 //    //defining a database reference
@@ -50,12 +51,13 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_menu);
 
+
         buttonRunning=   (Button) findViewById(R.id.buttonRunning);
         buttonSoccerBall=   (Button) findViewById(R.id.buttonSoccerBall);
         buttonYoga=   (Button) findViewById(R.id.buttonYoga);
         buttonKaraoke=   (Button) findViewById(R.id.buttonKaraoke);
         buttonLogOut=   (Button) findViewById(R.id.buttonLogOut);
-        myImage = (ImageButton) findViewById(R.id.myButton);
+        settingClick = (ImageButton) findViewById(R.id.settingProfil);
 
 
 
@@ -136,15 +138,15 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
         saveLocation();
 
-        if(flag==false) {
-            Drawable myDrawable = getResources().getDrawable(R.drawable.add);
-
-            Bitmap bitmapD = ((BitmapDrawable) myDrawable).getBitmap();
-            //TODO - upload bitmap as bytearray to firebase
-
-            strImadeDefoult = converttostring(bitmapD);
-            addtofirebace(strImadeDefoult);
-        }
+//        if(flag==false) {
+//            Drawable myDrawable = getResources().getDrawable(R.drawable.add);
+//
+//            Bitmap bitmapD = ((BitmapDrawable) myDrawable).getBitmap();
+//            //TODO - upload bitmap as bytearray to firebase
+//
+//            strImadeDefoult = converttostring(bitmapD);
+//            addtofirebace(strImadeDefoult);
+//        }
         startActivity(new Intent(getApplicationContext(), MapsActivity.class));
     }
 
@@ -187,68 +189,73 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    public void goToSettingProfil(View view) {
+        startActivity(new Intent(this, Profile.class));
 
-    public void goToGallery(View view) {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
-
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-
-        startActivityForResult(chooserIntent, SELECT_PICTURE);
-
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
-                String selectedImagePath = getPath(selectedImageUri);
-                System.out.println("Image Path : " + selectedImagePath);
-                try {
-
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                    //TODO - upload bitmap as bytearray to firebase
-
-                    bitmap = Bitmap.createScaledBitmap(bitmap,350,350,true);
-
-                    String arr =converttostring(bitmap);
-                    addtofirebace(arr);
-                    myImage.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-    public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-    public void  addtofirebace(String smyimage) {
-        Firebase ref = new Firebase("https://sportapp-74b9c.firebaseio.com/image/");
-        ref.child(RegisterActivity.user).setValue(smyimage);
-    }
-
-    public String converttostring(Bitmap bitmap) {
-
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
-        flag=true;
-        return temp;
-    }
+//
+//    public void goToGallery(View view) {
+//        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        getIntent.setType("image/*");
+//
+//        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        pickIntent.setType("image/*");
+//
+//        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+//
+//        startActivityForResult(chooserIntent, SELECT_PICTURE);
+//
+////        Intent intent = new Intent();
+////        intent.setType("image/*");
+////        intent.setAction(Intent.ACTION_GET_CONTENT);
+////        startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
+//    }
+//
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == SELECT_PICTURE) {
+//                Uri selectedImageUri = data.getData();
+//                String selectedImagePath = getPath(selectedImageUri);
+//                System.out.println("Image Path : " + selectedImagePath);
+//                try {
+//
+//                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+//                    //TODO - upload bitmap as bytearray to firebase
+//
+//                    bitmap = Bitmap.createScaledBitmap(bitmap,350,350,true);
+//
+//                    String arr =converttostring(bitmap);
+//                    addtofirebace(arr);
+//                    myImage.setImageBitmap(bitmap);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }
+//    }
+//
+//    public String getPath(Uri uri) {
+//        String[] projection = { MediaStore.Images.Media.DATA };
+//        Cursor cursor = managedQuery(uri, projection, null, null, null);
+//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//        cursor.moveToFirst();
+//        return cursor.getString(column_index);
+//    }
+//    public void  addtofirebace(String smyimage) {
+//        Firebase ref = new Firebase("https://sportapp-74b9c.firebaseio.com/image/");
+//        ref.child(RegisterActivity.user).setValue(smyimage);
+//    }
+//
+//    public String converttostring(Bitmap bitmap) {
+//
+//        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+//        byte [] b=baos.toByteArray();
+//        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+//        flag=true;
+//        return temp;
+//    }
 }

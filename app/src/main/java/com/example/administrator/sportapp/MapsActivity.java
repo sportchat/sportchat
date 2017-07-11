@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,7 +46,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DatabaseReference databaseReference;
 
     private ImageButton friendImage;
-
+   public Bitmap bitmapImage;
+    private ImageView ImageV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +103,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if ((userLocation2.latitude <lat +0.15 && userLocation2.latitude >lat -0.15 )  //check if the user's location betwin +\- 0.15 pixel
                             && (userLocation2.longitude <lon +0.15 && userLocation2.longitude >lon -0.15 )
                             &&(userLocation2.latitude != 0.0 || userLocation2.latitude != 0.0)) {
+
+
                         mMap.addMarker(new MarkerOptions().position(userLocation2).title("" + data));
+                        //.icon(BitmapDescriptorFactory.fromBitmap(bitmapImage))
                      /* to do  byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);*/
                     }
@@ -175,8 +181,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String strImage= (dataSnapshot.child(""+titleUserName).getValue(String.class));
 
                 Bitmap bitmap =StringToBitMap(strImage);
-                friendImage.setVisibility(View.VISIBLE);
 
+                bitmapImage = bitmap;
+//                ImageV.setImageBitmap(bitmap);
+//                ImageV.setVisibility(View.VISIBLE);
+
+                friendImage.setVisibility(View.VISIBLE);
                 friendImage.setImageBitmap(bitmap);
 
                 friendImage.setOnClickListener(new View.OnClickListener() {

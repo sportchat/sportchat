@@ -14,98 +14,103 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="48dp">
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="526dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        tools:ignore="UselessParent">
+
+        <Button
+            android:id="@+id/buttonSoccerBall"
             android:layout_width="match_parent"
-            android:layout_height="526dp"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
+            android:layout_height="wrap_content"
 
-            <Button
-                android:id="@+id/buttonSoccerBall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="כדורגל"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:ignore="HardcodedText" />
 
-                android:background="@drawable/buttonshape"
-                android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:text="כדורגל"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                tools:ignore="HardcodedText" />
+        <Button
+            android:id="@+id/buttonRunning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-            <Button
-                android:id="@+id/buttonRunning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="ריצה"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:ignore="HardcodedText,UnusedAttribute" />
 
-                android:background="@drawable/buttonshape"
-                android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:text="ריצה"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                tools:ignore="HardcodedText,UnusedAttribute" />
+        <Button
+            android:id="@+id/buttonYoga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-            <Button
-                android:id="@+id/buttonYoga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="יוגה"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:ignore="HardcodedText" />
 
-                android:background="@drawable/buttonshape"
-                android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:text="יוגה"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                tools:ignore="HardcodedText" />
+        <Button
+            android:id="@+id/buttonKaraoke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="קריוקי"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:ignore="HardcodedText" />
 
-            <Button
-                android:id="@+id/buttonKaraoke"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buttonshape"
-                android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:text="קריוקי"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                tools:ignore="HardcodedText" />
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Log out"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:ignore="HardcodedText,RtlHardcoded" />
 
-            <Button
-                android:id="@+id/buttonLogOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/buttonshape"
-                android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:text="Log out"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                tools:ignore="HardcodedText,RtlHardcoded" />
+        <ImageButton
+            android:id="@+id/settingProfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.10"
+            android:layout_gravity= "right|bottom"
 
-            <ImageButton
-                android:id="@+id/myButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="goToGallery"
-                app:srcCompat="@drawable/add"
-                tools:layout_editor_absoluteX="268dp"
-                tools:layout_editor_absoluteY="395dp" />
+            android:onClick="goToSettingProfil"
+            app:srcCompat="@drawable/settings"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="100dp" />
 
-        </LinearLayout>
+    </LinearLayout>
 
 
 </FrameLayout>
