@@ -15,6 +15,7 @@ import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ public class Profile extends AppCompatActivity {
     private String imageString;
     private String strImadeDefoult;
     private Bitmap bitmap;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,8 @@ public class Profile extends AppCompatActivity {
         mTextName.setText(RegisterActivity.user);
         mTextName.setVisibility(View.VISIBLE);
         myImage = (ImageButton)findViewById(R.id.user_profile_photo);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar2);
+
     }
 
 
@@ -75,6 +80,7 @@ public class Profile extends AppCompatActivity {
                     //TODO - upload bitmap as bytearray to firebase
 
                     bitmap = Bitmap.createScaledBitmap(bitmap,350,350,true);
+                    myImage.setImageBitmap(bitmap);
 
                     imageString =converttostring(bitmap);
 
@@ -112,6 +118,9 @@ public class Profile extends AppCompatActivity {
     public void saveImage(View view) {
 
         if(flag==false) {
+            progressBar.setProgress(0);
+            progressBar.setMax(15);
+            progressBar.setVisibility(View.VISIBLE);
             Drawable myDrawable = getResources().getDrawable(R.drawable.add);
 
             Bitmap bitmapD = ((BitmapDrawable) myDrawable).getBitmap();
@@ -123,7 +132,6 @@ public class Profile extends AppCompatActivity {
         }
         else {
             addtofirebace(imageString);
-            myImage.setImageBitmap(bitmap);
             Toast.makeText(this, "התמונה נשמרה ", Toast.LENGTH_LONG).show();
         }
         onBackPressed();
