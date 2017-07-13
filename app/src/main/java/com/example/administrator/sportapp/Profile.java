@@ -134,8 +134,7 @@ public class Profile extends AppCompatActivity {
             addtofirebace(imageString);
             Toast.makeText(this, "התמונה נשמרה ", Toast.LENGTH_LONG).show();
         }
-        onBackPressed();
+        startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
 
-//        startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
     }
 }

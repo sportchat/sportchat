@@ -38,7 +38,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public double latitude;
     public double lat = 31.35, lon = 35.64, lona, lata;
     List<String> lst = new ArrayList<String>();
-    List<String> lst2 = new ArrayList<String>();
+
+    private String myHobbies;
+    private String userHobbies;
+
     private Button chat;
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -83,26 +86,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        Firebase ref2 = new Firebase("https://sportapp-74b9c.firebaseio.com/Image");
-        Firebase ref = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
-        ref.addValueEventListener(new ValueEventListener() {
+        Firebase refUserInfo = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/");
+        refUserInfo.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 friendImage.setVisibility(View.INVISIBLE);
-                // Result will be holded Here
+
+                myHobbies = (dataSnapshot.child("" + user).child("Hobbies").getValue(String.class));
+
+                lat = SelectMenuActivity.myLatitude;
+                lon = SelectMenuActivity.myLongitude;
+
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                     lst.add(String.valueOf(dsp.getKey())); //add result into array list
                 }
-                for (String data : lst) {
-                    lat = Double.parseDouble(dataSnapshot.child("" + user).child("latitude").getValue(String.class).toString());
-                    lon = Double.parseDouble(dataSnapshot.child("" + user).child("longitude").getValue(String.class).toString());
 
-                    lata = Double.parseDouble(dataSnapshot.child("" + data).child("latitude").getValue(String.class).toString());
-                    lona = Double.parseDouble(dataSnapshot.child("" + data).child("longitude").getValue(String.class).toString());
+                for (String data : lst) {
+                    userHobbies = (dataSnapshot.child("" + data).child("Hobbies").getValue(String.class));
+                    lata =  Double.parseDouble(dataSnapshot.child("" + data).child("Location").child("latitude").getValue(String.class).toString());
+                    lona = Double.parseDouble(dataSnapshot.child("" + data).child("Location").child("longitude").getValue(String.class).toString());
                     LatLng userLocation2 = new LatLng(lata, lona);
-                    if ((userLocation2.latitude <lat +0.15 && userLocation2.latitude >lat -0.15 )  //check if the user's location betwin +\- 0.15 pixel
+
+                    if ((userHobbies.equals(myHobbies))
+                            && (userLocation2.latitude <lat +0.15 && userLocation2.latitude >lat -0.15 )  //check if the user's location betwin +\- 0.15 pixel
                             && (userLocation2.longitude <lon +0.15 && userLocation2.longitude >lon -0.15 )
-                            &&(userLocation2.latitude != 0.0 || userLocation2.latitude != 0.0)) {
+                            && (userLocation2.latitude != 0.0 || userLocation2.latitude != 0.0)) {
 
 
                         mMap.addMarker(new MarkerOptions().position(userLocation2).title("" + data));
@@ -112,8 +120,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
 
                 }
-                lat = Double.parseDouble(dataSnapshot.child("" + user).child("latitude").getValue(String.class).toString());
-                lon = Double.parseDouble(dataSnapshot.child("" + user).child("longitude").getValue(String.class).toString());
+
+                lat = Double.parseDouble(dataSnapshot.child("" + user).child("Location").child("latitude").getValue(String.class).toString());
+                lon = Double.parseDouble(dataSnapshot.child("" + user).child("Location").child("longitude").getValue(String.class).toString());
 
 
                 LatLng userLocation = new LatLng(lat, lon);

@@ -37,8 +37,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     private Button buttonKaraoke;
     private Button buttonLogOut;
     public static String hobbies;
-    public double latitude;
-    public double longitude;
+    public static double myLatitude;
+    public static double myLongitude;
     private ImageButton settingClick;
     public boolean flag=false;
     private String strImadeDefoult;
@@ -98,8 +98,8 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         gps = new GPSTracker(SelectMenuActivity.this);
 
         if (gps.canGetLocation()) {
-            latitude = gps.getLatitude();
-            longitude = gps.getLongitude();
+            myLatitude = gps.getLatitude();
+            myLongitude = gps.getLongitude();
 
 
 //
@@ -110,10 +110,10 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         } else {
             gps.showSettingsAlert();
         }
-        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Location");
+        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/"+RegisterActivity.user+"/Location");
 
-        Location location = new Location(latitude, longitude);
-        reference.child(RegisterActivity.user).setValue(location);
+        Location location = new Location(myLatitude, myLongitude);
+        reference.setValue(location);
 
     }
 
@@ -128,9 +128,9 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
         finish();
 
-        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/Hobbies/"+hobbies);
+        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/"+RegisterActivity.user+"/Hobbies");
 
-        reference.child(RegisterActivity.user).setValue(hobbies);
+        reference.setValue(hobbies);
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
 
