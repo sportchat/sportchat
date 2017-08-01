@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
-    tools:context="com.example.administrator.sportapp.SelectMenuActivity">
+    tools:context="com.example.administrator.sportapp.SelectMenuActivity"
+    tools:ignore="ExtraText">
 
 
         android:layout_width="368dp"
@@ -97,7 +98,22 @@
             android:textColor="#FFFFFF"
             android:textSize="30sp"
             tools:ignore="HardcodedText,RtlHardcoded" />
-
+        <Button
+            android:id="@+id/button_show_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="button_show_token"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:ignore="HardcodedText,RtlHardcoded" />
         <ImageButton
             android:id="@+id/settingProfil"
             android:layout_width="wrap_content"
@@ -108,7 +124,9 @@
             android:onClick="goToSettingProfil"
             app:srcCompat="@drawable/settings"
             tools:layout_editor_absoluteX="100dp"
-            tools:layout_editor_absoluteY="100dp" />
+            tools:layout_editor_absoluteY="100dp"
+            tools:ignore="ContentDescription,InefficientWeight,RtlHardcoded"
+            android:contentDescription="" />
 
     </LinearLayout>
 

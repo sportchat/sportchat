@@ -1,28 +1,17 @@
 package com.example.administrator.sportapp;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class SelectMenuActivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,8 +29,9 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     public static double myLatitude;
     public static double myLongitude;
     private ImageButton settingClick;
-    public boolean flag=false;
+    public boolean flag = false;
     private String strImadeDefoult;
+    private static final String TAG = "MainActivity";
 //    //defining a database reference
 //    private DatabaseReference databaseReference;
 
@@ -50,15 +40,23 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_menu);
+        Button btnShowToken = (Button)findViewById(R.id.button_show_token);
+        btnShowToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Get the token
+                String token = FirebaseInstanceId.getInstance().getToken();
+                Log.d(TAG, "Token: " + token);
+                Toast.makeText(SelectMenuActivity.this, token, Toast.LENGTH_SHORT).show();
+            }
+        });
 
-
-        buttonRunning=   (Button) findViewById(R.id.buttonRunning);
-        buttonSoccerBall=   (Button) findViewById(R.id.buttonSoccerBall);
-        buttonYoga=   (Button) findViewById(R.id.buttonYoga);
-        buttonKaraoke=   (Button) findViewById(R.id.buttonKaraoke);
-        buttonLogOut=   (Button) findViewById(R.id.buttonLogOut);
+        buttonRunning = (Button) findViewById(R.id.buttonRunning);
+        buttonSoccerBall = (Button) findViewById(R.id.buttonSoccerBall);
+        buttonYoga = (Button) findViewById(R.id.buttonYoga);
+        buttonKaraoke = (Button) findViewById(R.id.buttonKaraoke);
+        buttonLogOut = (Button) findViewById(R.id.buttonLogOut);
         settingClick = (ImageButton) findViewById(R.id.settingProfil);
-
 
 
         //        setButtonsLock(false);
@@ -89,7 +87,6 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
     private void saveLocation() {
         //save Gps location
 
@@ -110,7 +107,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         } else {
             gps.showSettingsAlert();
         }
-        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/"+RegisterActivity.user+"/Location");
+        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/" + RegisterActivity.user + "/Location");
 
         Location location = new Location(myLatitude, myLongitude);
         reference.setValue(location);
@@ -128,12 +125,11 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
         finish();
 
-        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/"+RegisterActivity.user+"/Hobbies");
+        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/" + RegisterActivity.user + "/Hobbies");
 
         reference.setValue(hobbies);
         //displaying a success toast
         Toast.makeText(this, "Information Saved...", Toast.LENGTH_LONG).show();
-
 
 
         saveLocation();
@@ -191,7 +187,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
     public void goToSettingProfil(View view) {
         startActivity(new Intent(this, Profile.class));
-
+        finish();
     }
 
 //
@@ -258,4 +254,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 //        flag=true;
 //        return temp;
 //    }
+
+
+
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -19,7 +20,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -114,9 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                         mMap.addMarker(new MarkerOptions().position(userLocation2).title("" + data));
-                        //.icon(BitmapDescriptorFactory.fromBitmap(bitmapImage))
-                     /* to do  byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);*/
+
                     }
 
                 }
@@ -129,9 +127,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 mMap.addMarker(new MarkerOptions().position(userLocation).title("user"));
                 //  mMap.addMarker(new MarkerOptions().position(userLocation2).title(""))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-
                     @Override
                     public void onInfoWindowClick(Marker arg0) {
 
@@ -139,7 +136,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             if (arg0 != null && arg0.getTitle().equals("" + data)) {
                                 setImageButton(data); //TODO - use the pressed contact's image
-
+                                Toast.makeText(MapsActivity.this, ""+data, Toast.LENGTH_LONG).show();
 //                                UserDetails.chatWith = data;
 ////                               startActivity(new Intent(MapsActivity.this, Chat.class));
                             }
@@ -155,10 +152,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         });
-
-
-        //  latitude= databaseReference.child(user.getUid()).child("latitude").;
-        // Add a marker in Sydney and move the camera
 
         LatLng MyLocation = new LatLng(latitude, longitude);
 
@@ -183,6 +176,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void setImageButton(final String titleUserName) {
+
         Firebase refI = new Firebase("https://sportapp-74b9c.firebaseio.com/image/");
         refI.addValueEventListener(new ValueEventListener() {
             @Override
@@ -230,7 +224,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public void chat_With_User() {
+    public  void onBackPressed() {
 
 
     }
