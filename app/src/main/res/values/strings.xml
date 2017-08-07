@@ -13,4 +13,15 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!--Contact Form-->
+
+    <string name="contact_form">צור קשר</string>
+    <string name="contact_form_name">שם מלא</string>
+    <string name="contact_form_email">אימייל</string>
+    <string name="contact_form_subject">נושא</string>
+    <string name="contact_form_message">תוכן ההודעה</string>
+    <string name="contact_form_button">שלח</string>
+    <string name="contact_form_post_message">שולח... </string>
+    <string name="contact_posted">ההודעה נשלחה בהצלחה</string>
 </resources>

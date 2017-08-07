@@ -40,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public static String user;
     String pass;
 
+    public static double myLatitude;
+    public static double myLongitude;
     //defining view objects
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -81,12 +83,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     user= (dataSnapshot.child("name").getValue(String.class));
 
             Context context = getApplicationContext();
-//            CharSequence text = user;
-//            int duration = Toast.LENGTH_SHORT;
-//
-//            Toast toast = Toast.makeText(context, text, duration);
-//            toast.show();
-//
                 }
 
                 @Override
@@ -100,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //so close this activit
             finish();
 
+            saveLocation();
             //and open Menu activity
             startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
 
@@ -144,15 +141,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if(user.equals("")){
             username.setError("can't be blank");
+
             return;
         }
         else if(!user.matches("[A-Za-z0-9א-ת]+")){
-            username.setError("only alphabet or number allowed");
+            username.setError("חייב להכיל אותיות בעברית או לועזית או מספרים");
             return;
 
         }
         else if(user.length()<5){
-            username.setError("at least 5 characters long");
+            username.setError("קצר מידיי - חייב להכיל לפחות 5 תווים");
             return;
         }
         else {
@@ -227,7 +225,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             databaseReference.child("usersName").child(user.getUid()).setValue(userInformation);
 
-
+                            saveLocation();
                             startActivity(new Intent(getApplicationContext(), Profile.class));
                         }else{
                             //display some message here
@@ -250,6 +248,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //open login activity when user taps on the already registered textview
             startActivity(new Intent(this, LoginActivity.class));
         }
+
+    }
+
+    private void saveLocation() {
+        //save Gps location
+
+        GPSTracker gps;
+
+        gps = new GPSTracker(RegisterActivity.this);
+
+        if (gps.canGetLocation()) {
+            myLatitude = gps.getLatitude();
+            myLongitude = gps.getLongitude();
+
+
+//
+//            Toast.makeText(
+//                    getApplicationContext(),
+//                    "Your Location is -\nLat: " + latitude + "\nLong: "
+//                            + longitude, Toast.LENGTH_LONG).show();
+        } else {
+            gps.showSettingsAlert();
+        }
+        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/" + RegisterActivity.user + "/Location");
+
+        Location location = new Location(myLatitude, myLongitude);
+        reference.setValue(location);
 
     }
 }

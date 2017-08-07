@@ -7,6 +7,7 @@
     >
 
     <LinearLayout
+        android:background="@drawable/runner"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="User Registration"
+            android:text="הרשמה"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             tools:ignore="HardcodedText" />
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter email"
+            android:hint="כתובת מייל (חובה)"
             android:inputType="textEmailAddress"
             tools:ignore="HardcodedText" />
 
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:inputType="textPersonName"
-            android:hint="enter username"
+            android:hint="שם משתמש"
             tools:ignore="HardcodedText" />
 
         <EditText
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter password"
+            android:hint="סיסמה"
             android:inputType="textPassword"
             tools:ignore="HardcodedText" />
 

@@ -24,14 +24,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Users extends AppCompatActivity {
-    ListView usersList;
-    TextView noUsersText;
-    ArrayList<String> al = new ArrayList<>();
-    int totalUsers = 0;
-    ProgressDialog pd;
+    public class Users extends AppCompatActivity {
+        ListView usersList;
+        TextView noUsersText;
+        ArrayList<String> al = new ArrayList<>();
+        int totalUsers = 0;
+        ProgressDialog pd;
 
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);

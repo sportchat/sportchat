@@ -6,32 +6,50 @@
     android:layout_height="wrap_content">
 
 
-
-        <RelativeLayout
+    <RelativeLayout
             android:id="@+id/profile_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/runner"
             android:elevation="4dp"
             android:paddingBottom="24dp"
+        tools:ignore="UnusedAttribute,UselessParent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColor="@color/colorPrimaryDark"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_alignParentTop="true"
+            android:background="@color/colorAccent"/>
+
+        <Button
+            android:id="@+id/mailConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="צור קשר"
+            android:onClick="contactForm"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/user_profile_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            tools:ignore="UnusedAttribute,UselessParent">
-
-
-            <TextView
-                android:id="@+id/user_profile_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:text="ברוך הבא"
-                android:textColor="#fff"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+            android:layout_alignParentStart="true" />
 
             <ImageButton
                 android:id="@+id/user_profile_photo"
@@ -59,19 +77,8 @@
                 android:onClick="saveImage"
                 tools:ignore="ContentDescription" />
 
+
+
         </RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="191dp" />
-
 
 </RelativeLayout>
