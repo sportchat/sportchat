@@ -55,7 +55,7 @@ public class Profile extends AppCompatActivity {
         myImage = (ImageButton)findViewById(R.id.user_profile_photo);
         result = (TextView) findViewById(R.id.username);
 
-        result.setText("שלום - " + getMyName());
+        result.setText("שלום - " + RegisterActivity.user);
 
     }
 
@@ -149,32 +149,33 @@ public class Profile extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
 
     }
-
-    private String getMyName(){
-
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-
-        Firebase nameReference = new Firebase("https://sportapp-74b9c.firebaseio.com/usersName/"+currentFirebaseUser.getUid());
-
-
-        nameReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                RegisterActivity.user= (dataSnapshot.child("name").getValue(String.class));
-
-                Context context = getApplicationContext();
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-        return RegisterActivity.user;
-    }
+//
+//    private String getMyName(){
+//
+//
+//        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+//
+//        Firebase nameReference = new Firebase("https://sportapp-74b9c.firebaseio.com/usersName/"+currentFirebaseUser.getUid());
+//
+//
+//        nameReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//
+//                RegisterActivity.user= (dataSnapshot.child("name").getValue(String.class));
+//
+//                Context context = getApplicationContext();
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//
+//            }
+//        });
+//
+//        return RegisterActivity.user;
+//    }
 
 
     public void contactForm(View view) {

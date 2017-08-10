@@ -106,9 +106,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     lata =  Double.parseDouble(dataSnapshot.child("" + data).child("Location").child("latitude").getValue(String.class).toString());
                     lona = Double.parseDouble(dataSnapshot.child("" + data).child("Location").child("longitude").getValue(String.class).toString());
                     LatLng userLocation2 = new LatLng(lata, lona);
-
-                    if ((userHobbies.equals(myHobbies))
-                            && (userLocation2.latitude <lat +0.15 && userLocation2.latitude >lat -0.15 )  //check if the user's location betwin +\- 0.15 pixel
+//
+//                    (userHobbies.equals(myHobbies))
+//                            &&
+                    if ( (userLocation2.latitude <lat +0.15 && userLocation2.latitude >lat -0.15 )  //check if the user's location betwin +\- 0.15 pixel
                             && (userLocation2.longitude <lon +0.15 && userLocation2.longitude >lon -0.15 )
                             && (userLocation2.latitude != 0.0 || userLocation2.latitude != 0.0)) {
 

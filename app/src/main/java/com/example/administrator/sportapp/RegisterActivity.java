@@ -48,8 +48,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button buttonSignup;
     private TextView textViewSignin;
     private ProgressDialog progressDialog;
-
-
     //defining firebaseauth object
     private FirebaseAuth firebaseAuth;
     //defining a database reference
@@ -82,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     user= (dataSnapshot.child("name").getValue(String.class));
 
-            Context context = getApplicationContext();
+                    Context context = getApplicationContext();
                 }
 
                 @Override
@@ -96,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //so close this activit
             finish();
 
-            saveLocation();
+//            saveLocation();
             //and open Menu activity
             startActivity(new Intent(getApplicationContext(), SelectMenuActivity.class));
 
@@ -225,7 +223,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             databaseReference.child("usersName").child(user.getUid()).setValue(userInformation);
 
-                            saveLocation();
+//                            saveLocation();
                             startActivity(new Intent(getApplicationContext(), Profile.class));
                         }else{
                             //display some message here
@@ -251,30 +249,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void saveLocation() {
-        //save Gps location
-
-        GPSTracker gps;
-
-        gps = new GPSTracker(RegisterActivity.this);
-
-        if (gps.canGetLocation()) {
-            myLatitude = gps.getLatitude();
-            myLongitude = gps.getLongitude();
-
-
+//    private void saveLocation() {
+//        //save Gps location
 //
-//            Toast.makeText(
-//                    getApplicationContext(),
-//                    "Your Location is -\nLat: " + latitude + "\nLong: "
-//                            + longitude, Toast.LENGTH_LONG).show();
-        } else {
-            gps.showSettingsAlert();
-        }
-        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/" + RegisterActivity.user + "/Location");
-
-        Location location = new Location(myLatitude, myLongitude);
-        reference.setValue(location);
-
-    }
+//        GPSTracker gps;
+//
+//        gps = new GPSTracker(RegisterActivity.this);
+//
+//        if (gps.canGetLocation()) {
+//            myLatitude = gps.getLatitude();
+//            myLongitude = gps.getLongitude();
+//
+//
+////
+////            Toast.makeText(
+////                    getApplicationContext(),
+////                    "Your Location is -\nLat: " + latitude + "\nLong: "
+////                            + longitude, Toast.LENGTH_LONG).show();
+//        } else {
+//            gps.showSettingsAlert();
+//        }
+//        Firebase reference = new Firebase("https://sportapp-74b9c.firebaseio.com/UserInfo/" + RegisterActivity.user + "/Location");
+//
+//        Location location = new Location(myLatitude, myLongitude);
+//        reference.setValue(location);
+//
+//    }
 }
