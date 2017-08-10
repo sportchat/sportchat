@@ -1,7 +1,6 @@
 package com.example.administrator.sportapp;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,13 +9,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -133,7 +128,6 @@ public class Profile extends AppCompatActivity {
             progressBar.setMax(15);
             progressBar.setVisibility(View.VISIBLE);
             Drawable myDrawable = getResources().getDrawable(R.drawable.add);
-
             Bitmap bitmapD = ((BitmapDrawable) myDrawable).getBitmap();
             //TODO - upload bitmap as bytearray to firebase
 

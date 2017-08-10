@@ -48,9 +48,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button buttonSignup;
     private TextView textViewSignin;
     private ProgressDialog progressDialog;
-
-
-    //defining firebaseauth object
+ //defining firebaseauth object
     private FirebaseAuth firebaseAuth;
     //defining a database reference
     private DatabaseReference databaseReference;

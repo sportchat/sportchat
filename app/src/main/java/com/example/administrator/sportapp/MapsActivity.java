@@ -49,7 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DatabaseReference databaseReference;
 
     private ImageButton friendImage;
-   public Bitmap bitmapImage;
+    public Bitmap bitmapImage;
     private ImageView ImageV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

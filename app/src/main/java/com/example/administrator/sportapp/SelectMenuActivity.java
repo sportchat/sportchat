@@ -59,6 +59,25 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
         settingClick = (ImageButton) findViewById(R.id.settingProfil);
 
 
+        //        setButtonsLock(false);
+//        //initializing firebase authentication object
+//        firebaseAuth = FirebaseAuth.getInstance();
+//
+//
+//        //if the user is not logged in
+//        //that means current user will return null
+//        if (firebaseAuth.getCurrentUser() == null) {
+//            //closing this activity
+//            finish();
+//            //starting login activity
+//            startActivity(new Intent(this, LoginActivity.class));
+//        }
+//
+//
+//        //getting the database reference
+//        databaseReference = FirebaseDatabase.getInstance().getReference();
+//
+
         //adding listener to button
         buttonRunning.setOnClickListener(this);
         buttonSoccerBall.setOnClickListener(this);
@@ -168,7 +187,7 @@ public class SelectMenuActivity extends AppCompatActivity implements View.OnClic
 
     public void goToSettingProfil(View view) {
         startActivity(new Intent(this, Profile.class));
-        finish();
+
     }
 
 //
